@@ -1,23 +1,23 @@
-import { useState } from "react";
-
+import { useState } from "react"
+import Statistics from "./components/Statistics"
 const App = () => {
-  const [good, setGood] = useState(0);
-  const [neutral, setNeutral] = useState(0);
-  const [bad, setBad] = useState(0);
-  const [counter, setCounter] = useState(0);
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
+  const [counter, setCounter] = useState(0)
 
   const handleGood = () => {
-    setGood(good + 1);
-    setCounter(counter + 1);
-  };
+    setGood(good + 1)
+    setCounter(counter + 1)
+  }
   const handleNeutral = () => {
-    setNeutral(neutral + 1);
-    setCounter(counter + 1);
-  };
+    setNeutral(neutral + 1)
+    setCounter(counter + 1)
+  }
   const handleBad = () => {
-    setBad(bad + 1);
-    setCounter(counter + 1);
-  };
+    setBad(bad + 1)
+    setCounter(counter + 1)
+  }
 
   return (
     <div className="container">
@@ -33,24 +33,10 @@ const App = () => {
           bad
         </button>
       </div>
-      <div>
-        <h2>Statistics</h2>
-        <div className="statistic-section">
-          <p>Good: {good}</p>
-          <p>Neutral: {neutral}</p>
-          <p>Bad: {bad}</p>
-          <p>All {good + bad + neutral}</p>
-          <p>
-            Average{" "}
-            {counter === 0
-              ? "-"
-              : (good * 1 + bad * -1 + neutral * 0) / counter}
-          </p>
-          <p>Positive {counter === 0 ? "-" : (good / counter) * 100} %</p>
-        </div>
-      </div>
-    </div>
-  );
-};
 
-export default App;
+      <Statistics good={good} bad={bad} neutral={neutral} count={counter} />
+    </div>
+  )
+}
+
+export default App
