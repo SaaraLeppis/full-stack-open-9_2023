@@ -1,18 +1,28 @@
+import StaticLine from "./StaticLine"
+
 const Statistics = ({ good, bad, neutral, count }) => {
+  const average = () => {
+    return count === 0 ? "-" : (good * 1 + bad * -1 + neutral * 0) / count
+  }
+  const positives = () => {
+    return count === 0 ? "-" : (good / count) * 100
+  }
   return (
     <div className="statistic-section">
       <h2>Statistics</h2>
       {count > 0 && (
         <>
-          <p>Good: {good}</p>
-          <p>Neutral: {neutral}</p>
-          <p>Bad: {bad}</p>
-          <p>All {good + bad + neutral}</p>
-          <p>
-            Average{" "}
-            {count === 0 ? "-" : (good * 1 + bad * -1 + neutral * 0) / count}
-          </p>
-          <p>Positive {count === 0 ? "-" : (good / count) * 100} %</p>
+          <StaticLine text="Good" value={good} />
+          <StaticLine text="Bad" value={bad} />
+          <StaticLine text="Neutral" value={neutral} />
+          <StaticLine text="All" value={count} />
+          <StaticLine text="Average" value={average()} />
+          <StaticLine
+            text="Positive"
+            value={positives()}
+            count={count}
+            sign="%"
+          />
         </>
       )}
       {count === 0 && <>No feedback given</>}
