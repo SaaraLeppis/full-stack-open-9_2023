@@ -11,19 +11,21 @@ const Statistics = ({ good, bad, neutral, count }) => {
     <div className="statistic-section">
       <h2>Statistics</h2>
       {count > 0 && (
-        <>
-          <StaticLine text="Good" value={good} />
-          <StaticLine text="Bad" value={bad} />
-          <StaticLine text="Neutral" value={neutral} />
-          <StaticLine text="All" value={count} />
-          <StaticLine text="Average" value={average()} />
-          <StaticLine
-            text="Positive"
-            value={positives()}
-            count={count}
-            sign="%"
-          />
-        </>
+        <table>
+          <tbody>
+            <StaticLine text="good" value={good} />
+            <StaticLine text="bad" value={bad} />
+            <StaticLine text="neutral" value={neutral} />
+            <StaticLine text="all" value={count} />
+            <StaticLine text="average" value={average()} />
+            <StaticLine
+              text="positive"
+              value={positives()}
+              count={count}
+              sign="%"
+            />
+          </tbody>
+        </table>
       )}
       {count === 0 && <>No feedback given</>}
     </div>
