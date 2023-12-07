@@ -1,12 +1,9 @@
 const StaticLine = (props) => {
-  console.log("Line", props)
   return (
     <tr>
       <th>{props.text}</th>
-      <td>
-        {props.value}
-        {props.sign}
-      </td>
+      <td>{props.value}</td>
+      <td>{props.sign}</td>
     </tr>
   )
 }

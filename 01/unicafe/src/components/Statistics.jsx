@@ -9,7 +9,7 @@ const Statistics = ({ good, bad, neutral, count }) => {
   }
   return (
     <div className="statistic-section">
-      <h2>Statistics</h2>
+      <h2>statistics</h2>
       {count > 0 && (
         <table>
           <tbody>
