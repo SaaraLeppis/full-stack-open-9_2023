@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const App = () => {
   const anecdotes = [
@@ -11,25 +11,51 @@ const App = () => {
     "Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when dianosing patients.",
     "The only way to go fast, is to go well.",
   ]
-  const voteArray = Array(anecdotes.length).fill(0)
-  const [selected, setSelected] = useState(0)
-  const [votes, setVotes] = useState(voteArray)
 
-  const handleSelectNew = () => {
-    console.log(voteArray, "is array of votes")
-    setSelected(Math.floor(Math.random() * anecdotes.length))
+  const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState([])
+  const [mostVotes, setMostVotes] = useState(0)
+  const [voteCalculator, setVoteCalculator] = useState(0)
+
+  //on load create and fill the votes list with 0
+  useEffect(() => {
+    const voteArray = Array(anecdotes.length).fill(0)
+    setVotes(voteArray)
+  }, [])
+
+  // when vote calculator changes, the index of most voted anecdote is set to mostVotes
+  useEffect(() => {
+    const indexOfMostVoted = votes.indexOf(Math.max(...votes))
+    setMostVotes(indexOfMostVoted)
+  }, [voteCalculator])
+
+  //random number generated for new index of anecdote
+  const selectNewHandler = () => {
+    const randomNumber = Math.floor(Math.random() * anecdotes.length)
+    setSelected(randomNumber)
   }
-  const handleVotes = () => {
-    console.log("votes are ow", votes)
-    const voteLis = [...votes]
-    votes[selected] += 1
+
+  //vote handler on click of vote button
+  const voteHandler = () => {
+    const currentVotes = [...votes]
+    currentVotes[selected] += 1
+    setVotes(currentVotes)
+    setVoteCalculator(voteCalculator + 1)
   }
 
   return (
-    <div>
-      {anecdotes[selected]}
-      <button onClick={handleSelectNew}>next anecdote</button>
-      <button onClick={handleVotes}>vote</button>
+    <div className="container">
+      <div className="select-section">
+        {anecdotes[selected]}
+        <button onClick={selectNewHandler}>next anecdote</button>
+        <button onClick={voteHandler}>vote</button>
+      </div>
+      {voteCalculator !== 0 && (
+        <div className="most-voted-section">
+          <p>{anecdotes[mostVotes]}</p>
+          <p>has {voteCalculator} votes </p>
+        </div>
+      )}
     </div>
   )
 }
