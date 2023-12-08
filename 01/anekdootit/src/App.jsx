@@ -53,7 +53,7 @@ const App = () => {
       {voteCalculator !== 0 && (
         <div className="most-voted-section">
           <p>{anecdotes[mostVotes]}</p>
-          <p id="votes-line">has {voteCalculator} votes </p>
+          <p id="votes-line">has {votes[mostVotes]} votes </p>
         </div>
       )}
     </div>
