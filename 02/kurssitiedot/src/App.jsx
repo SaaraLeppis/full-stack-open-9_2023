@@ -12,13 +12,23 @@ const App = () => {
       },
       {
         name: "Using props to pass data",
-        exercises: 7,
+        exercises: 5,
         id: 2,
       },
       {
         name: "State of a component",
         exercises: 14,
         id: 3,
+      },
+      {
+        name: "Mapping through",
+        exercises: 5,
+        id: 4,
+      },
+      {
+        name: "React is fun",
+        exercises: 1,
+        id: 5,
       },
     ],
   }

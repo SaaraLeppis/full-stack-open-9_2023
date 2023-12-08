@@ -23,3 +23,6 @@ li {
   list-style: none;
   margin-bottom: 4px;
 }
+#total-line {
+  font-weight: bold;
+}
