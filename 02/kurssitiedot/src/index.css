@@ -9,10 +9,14 @@ body {
   color: #393a10;
   display: flex;
 }
+.container {
+  margin: 2em;
+}
 
 h1 {
-  font-size: 3.2em;
+  font-size: 2em;
   line-height: 1.1;
+  padding-bottom: 0.4em;
 }
 
 button {
