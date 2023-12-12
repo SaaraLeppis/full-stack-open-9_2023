@@ -1,10 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Noto Serif", serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -25,26 +27,42 @@ body {
   background-color: var(--light);
   color: var(--dark);
   display: flex;
-
-  min-width: 320px;
+  justify-content: center;
+  min-width: 80vw;
   min-height: 100vh;
+}
+input {
+  color: var(--dark);
+  border-radius: 2px;
+  height: 2em;
 }
 
 button {
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  margin: 0.4em 0 0.4em 0;
+  padding: 0.2em 1.2em;
   font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--lt-green);
+  color: var(--dark);
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: all 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: var(--mid-green);
+  background-color: var(--mid-green);
+  color: var(--light);
+  font-weight: bold;
+  box-shadow: 1px 1px 5px var(--brown);
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+.form-section,
+.list-section {
+  margin-top: 2em;
+}
+li {
+  list-style: none;
 }
