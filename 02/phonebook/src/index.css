@@ -31,7 +31,8 @@ body {
   min-width: 80vw;
   min-height: 100vh;
 }
-#input-section {
+#input-section,
+#filter-section {
   display: flex;
   flex-direction: column;
   width: 200px;
