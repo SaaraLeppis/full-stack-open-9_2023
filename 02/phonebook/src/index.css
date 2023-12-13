@@ -71,7 +71,7 @@ button:hover {
 }
 .form-section,
 .list-section {
-  margin-top: 2em;
+  margin: 1em 0;
 }
 li {
   list-style: none;
