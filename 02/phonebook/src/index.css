@@ -31,10 +31,24 @@ body {
   min-width: 80vw;
   min-height: 100vh;
 }
+#input-section {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+label {
+  display: inline-block;
+}
+
 input {
   color: var(--dark);
-  border-radius: 2px;
+  border-radius: 3px;
+  border: 1px solid var(--dark);
   height: 2em;
+  outline: none;
+}
+input:focus {
+  border-color: var(--mid-green);
 }
 
 button {
@@ -54,10 +68,6 @@ button:hover {
   color: var(--light);
   font-weight: bold;
   box-shadow: 1px 1px 5px var(--brown);
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 .form-section,
 .list-section {
