@@ -25,12 +25,12 @@ const App = () => {
     setNewName("")
     setNewNumber("")
   }
-  const handlePersonChange = (event) => {
-    setNewName(event.target.value)
+  const handleChange = (event) => {
+    event.target.name === "newName"
+      ? setNewName(event.target.value)
+      : setNewNumber(event.target.value)
   }
-  const handleNumberChange = (event) => {
-    setNewNumber(event.target.value)
-  }
+
   const handleSearch = (event) => {
     setSearchValue(event.target.value)
   }
@@ -41,15 +41,27 @@ const App = () => {
         <h2>Phonebook</h2>
         <Filter value={searchValue} onChange={handleSearch} />
         <h3>add a new</h3>
+        {/*         <PersonForm
+          onSubmit={addPerson}
+          value={newName}
+          onChange={handlePersonChange}
+          onChange={handleNumberChange}
+        /> */}
         <form onSubmit={addPerson}>
           <div id="input-section">
             <label htmlFor="newName">name:</label>
-            <input id="newName" value={newName} onChange={handlePersonChange} />
+            <input
+              id="newName"
+              name="newName"
+              value={newName}
+              onChange={handleChange}
+            />
             <label htmlFor="newValue">number: </label>
             <input
               id="newValue"
+              name="newValue"
               value={newNumber}
-              onChange={handleNumberChange}
+              onChange={handleChange}
             />
           </div>
           <div>
