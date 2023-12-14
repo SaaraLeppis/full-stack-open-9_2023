@@ -35,7 +35,7 @@ body {
 #filter-section {
   display: flex;
   flex-direction: column;
-  width: 200px;
+  width: 300px;
 }
 label {
   display: inline-block;
@@ -45,8 +45,9 @@ input {
   color: var(--dark);
   border-radius: 3px;
   border: 1px solid var(--dark);
-  height: 2em;
+  height: 2.2em;
   outline: none;
+  padding: 0 0.4em;
 }
 input:focus {
   border-color: var(--mid-green);
