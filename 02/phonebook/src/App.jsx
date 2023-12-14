@@ -49,56 +49,16 @@ const App = () => {
         <h2>Phonebook</h2>
         <Filter value={searchValue} onChange={handleSearch} />
         <h3>add a new</h3>
-        {/*         <PersonForm
-          onSubmit={addPerson}
-          value={newName}
-          onChange={handlePersonChange}
-          onChange={handleNumberChange}
-        /> */}
         <Form
           onSubmit={addPerson}
           name={newName}
           number={newNumber}
           onChange={handleChange}
         />
-        {/* <form onSubmit={addPerson}>
-          <div id="input-section">
-            <label htmlFor="newName">name:</label>
-            <input
-              id="newName"
-              name="newName"
-              value={newName}
-              onChange={handleChange}
-            />
-            <label htmlFor="newValue">number: </label>
-            <input
-              id="newValue"
-              name="newValue"
-              value={newNumber}
-              onChange={handleChange}
-            />
-          </div>
-          <div>
-            <button type="submit">add</button>
-          </div>
-        </form> */}
       </div>
       <div className="list-section">
         <h3>numbers</h3>
         <Person persons={persons} searchValue={searchValue} />
-        {/*         <ul className="persons">
-          {persons
-            .filter(
-              (person) =>
-                person.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-                searchValue === ""
-            )
-            .map((person) => (
-              <li key={person.name}>
-                {person.name} {person.number}
-              </li>
-            ))}
-        </ul> */}
       </div>
     </div>
   )
