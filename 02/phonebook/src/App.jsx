@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import Filter from "./components/Filter"
 import Form from "./components/Form"
 import Person from "./components/Person"
+import personServices from "./services/personServices"
 
 import axios from "axios"
 
@@ -16,15 +17,17 @@ const App = () => {
 
   //axios
   useEffect(() => {
-    axios.get(`http://${port}/persons`).then((response) => {
-      setPersons(response.data)
+    personServices.getAll().then((someData) => {
+      setPersons(someData)
     })
-  }, [])
+  }, [newName])
 
   const setNewData = (newData) => {
-    axios.post(`http://${port}/persons`, newData).then((response) => {
-      setPersons(persons.concat(response.data))
-    })
+    personServices.create(newData)
+    /* // Don't need following (which used earlier)as useEffect will update the list when name input is cleared.
+    .then((xx) => {
+      setPersons(persons.concat(xx))
+    }) */
   }
 
   //function to check if name exists
