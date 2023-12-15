@@ -21,20 +21,22 @@ const App = () => {
     })
   }, [])
 
+  const setNewData = (newData) => {
+    axios.post(`http://${port}/persons`, newData).then((response) => {
+      setPersons(persons.concat(response.data))
+    })
+  }
+
   //function to check if name exists
   const nameExists = (checkName) => {
     return persons.some((person) => person.name === checkName)
   }
 
-  const clearInputs = () => {
-    setNewName("")
-    setNewNumber(null)
-  }
   const addPerson = (event) => {
     event.preventDefault()
     nameExists(newName)
       ? alert(`${newName} is already added to phonebook`)
-      : setPersons(persons.concat({ name: newName, number: newNumber }))
+      : setNewData({ name: newName, number: newNumber })
 
     setNewName("")
     setNewNumber("")
