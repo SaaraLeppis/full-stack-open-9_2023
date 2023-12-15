@@ -10,7 +10,6 @@ const getAll = () => {
 
 const create = (newData) => {
   const request = axios.post(baseUrl, newData)
-  console.log(request, "in create")
   return request.then((response) => response.data)
 }
 export default { getAll, create }

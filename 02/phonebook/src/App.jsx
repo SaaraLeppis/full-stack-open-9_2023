@@ -12,16 +12,13 @@ const App = () => {
   const [newNumber, setNewNumber] = useState("")
   const [searchValue, setSearchValue] = useState("")
 
-  // change port if 3001 in use
-  const port = "localhost:3001"
-
-  //axios
   useEffect(() => {
     personServices.getAll().then((someData) => {
       setPersons(someData)
     })
   }, [newName])
 
+  //function for adding person data
   const setNewData = (newData) => {
     personServices.create(newData)
     /* // Don't need following (which used earlier)as useEffect will update the list when name input is cleared.
@@ -35,6 +32,7 @@ const App = () => {
     return persons.some((person) => person.name === checkName)
   }
 
+  // checking if person exists (alert) and adding if not
   const addPerson = (event) => {
     event.preventDefault()
     nameExists(newName)
@@ -44,6 +42,8 @@ const App = () => {
     setNewName("")
     setNewNumber("")
   }
+  // change and search handlers
+
   const handleChange = (event) => {
     event.target.name === "newName"
       ? setNewName(event.target.value)
