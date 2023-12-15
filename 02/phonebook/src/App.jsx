@@ -1,19 +1,25 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Filter from "./components/Filter"
 import Form from "./components/Form"
 import Person from "./components/Person"
 
-const App = () => {
-  const [persons, setPersons] = useState([
-    { name: "Arto Hellas", number: "040-123 321" },
-    { name: "Sami Metsälä", number: "040-555 555" },
-    { name: "Tiina Taneli", number: "040-621 321" },
-    { name: "Aamu Aikainen", number: "044-999 321" },
-  ])
+import axios from "axios"
 
+const App = () => {
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState("")
   const [newNumber, setNewNumber] = useState("")
   const [searchValue, setSearchValue] = useState("")
+
+  // change port if 3001 in use
+  const port = "localhost:3001"
+
+  //axios
+  useEffect(() => {
+    axios.get(`http://${port}/persons`).then((response) => {
+      setPersons(response.data)
+    })
+  }, [])
 
   //function to check if name exists
   const nameExists = (checkName) => {
