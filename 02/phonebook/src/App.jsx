@@ -13,18 +13,16 @@ const App = () => {
   const [searchValue, setSearchValue] = useState("")
 
   useEffect(() => {
-    personServices.getAll().then((someData) => {
-      setPersons(someData)
+    console.log("hook")
+    personServices.getAll().then((phoneBookContent) => {
+      setPersons(phoneBookContent)
     })
-  }, [newName])
-
+  }, [])
   //function for adding person data
   const setNewData = (newData) => {
-    personServices.create(newData)
-    /* // Don't need following (which used earlier)as useEffect will update the list when name input is cleared.
-    .then((xx) => {
-      setPersons(persons.concat(xx))
-    }) */
+    personServices.create(newData).then((data) => {
+      setPersons(persons.concat(data))
+    })
   }
 
   //function to check if name exists
@@ -42,12 +40,22 @@ const App = () => {
     setNewName("")
     setNewNumber("")
   }
-  // change and search handlers
+  //deleting person when 'delete'-button clicked
+  const deletePerson = (event) => {
+    event.preventDefault()
+    personServices.remove(event.target.value)
+    const newSet = persons.filter((person) => person.name !== event.target.name)
+    setPersons(newSet)
+  }
 
+  // change and search handlers
   const handleChange = (event) => {
     event.target.name === "newName"
       ? setNewName(event.target.value)
       : setNewNumber(event.target.value)
+    /*     event.target.name === "delete"
+      ? console.log("click", event.target.value)
+      : console.log("hups") */
   }
 
   const handleSearch = (event) => {
@@ -69,7 +77,11 @@ const App = () => {
       </div>
       <div className="list-section">
         <h3>numbers</h3>
-        <Person persons={persons} searchValue={searchValue} />
+        <Person
+          persons={persons}
+          searchValue={searchValue}
+          removePerson={deletePerson}
+        />
       </div>
     </div>
   )

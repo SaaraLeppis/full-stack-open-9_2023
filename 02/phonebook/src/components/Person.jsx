@@ -1,4 +1,4 @@
-const Person = ({ persons, searchValue }) => {
+const Person = ({ persons, searchValue, removePerson }) => {
   return (
     <ul className="persons">
       {persons
@@ -10,6 +10,15 @@ const Person = ({ persons, searchValue }) => {
         .map((person, i) => (
           <li key={i}>
             {person.name} {person.number}
+            <button
+              id="remove-button"
+              name={person.name}
+              type="reset"
+              value={person.id}
+              onClick={removePerson}
+            >
+              delete
+            </button>
           </li>
         ))}
     </ul>

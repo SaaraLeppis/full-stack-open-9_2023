@@ -12,4 +12,10 @@ const create = (newData) => {
   const request = axios.post(baseUrl, newData)
   return request.then((response) => response.data)
 }
-export default { getAll, create }
+
+const remove = (removeIndex) => {
+  const request = axios.delete(`${baseUrl}/${removeIndex}`)
+  console.log(request, "delete")
+  return request.then((response) => response.data)
+}
+export default { getAll, create, remove }

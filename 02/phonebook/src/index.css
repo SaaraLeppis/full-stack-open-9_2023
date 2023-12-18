@@ -71,6 +71,11 @@ button:hover {
   font-weight: bold;
   box-shadow: 1px 1px 5px var(--brown);
 }
+#remove-button {
+  padding: 0.2em 1em;
+  margin: 0.2em;
+}
+
 .form-section,
 .list-section {
   margin: 1em 0;
