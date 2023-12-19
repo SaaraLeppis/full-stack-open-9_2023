@@ -13,7 +13,6 @@ const App = () => {
   const [searchValue, setSearchValue] = useState("")
 
   useEffect(() => {
-    console.log("hook")
     personServices.getAll().then((phoneBookContent) => {
       setPersons(phoneBookContent)
     })
@@ -43,9 +42,13 @@ const App = () => {
   //deleting person when 'delete'-button clicked
   const deletePerson = (event) => {
     event.preventDefault()
-    personServices.remove(event.target.value)
-    const newSet = persons.filter((person) => person.name !== event.target.name)
-    setPersons(newSet)
+    if (window.confirm(`Delete ${event.target.name}?`)) {
+      personServices.remove(event.target.value)
+      const newSet = persons.filter(
+        (person) => person.name !== event.target.name
+      )
+      setPersons(newSet)
+    }
   }
 
   // change and search handlers
