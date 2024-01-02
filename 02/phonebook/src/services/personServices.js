@@ -15,7 +15,10 @@ const create = (newData) => {
 
 const remove = (removeIndex) => {
   const request = axios.delete(`${baseUrl}/${removeIndex}`)
-  console.log(request, "delete")
   return request.then((response) => response.data)
 }
-export default { getAll, create, remove }
+const update = (id, dataObject) => {
+  const request = axios.put(`${baseUrl}/${id}`, dataObject)
+  return request.then((response) => response.data)
+}
+export default { getAll, create, remove, update }

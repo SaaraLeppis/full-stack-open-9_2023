@@ -17,6 +17,7 @@ const App = () => {
       setPersons(phoneBookContent)
     })
   }, [])
+
   //function for adding person data
   const setNewData = (newData) => {
     personServices.create(newData).then((data) => {
@@ -25,7 +26,9 @@ const App = () => {
   }
 
   //function to check if name exists
-  const nameExists = (checkName) => {
+  const nameExists = (checkName, checkNumber) => {
+    console.log(persons.find((person) => person.name === checkName))
+
     return persons.some((person) => person.name === checkName)
   }
 
@@ -56,9 +59,6 @@ const App = () => {
     event.target.name === "newName"
       ? setNewName(event.target.value)
       : setNewNumber(event.target.value)
-    /*     event.target.name === "delete"
-      ? console.log("click", event.target.value)
-      : console.log("hups") */
   }
 
   const handleSearch = (event) => {
