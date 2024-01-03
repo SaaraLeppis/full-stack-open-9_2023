@@ -16,6 +16,8 @@
   --light: #edf4ed;
   --lt-green: #abd1b5;
   --mid-green: #79b791;
+  --notification-green: #23c552;
+  --alert-red: #c42323;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -32,12 +34,14 @@ body {
   min-height: 100vh;
 }
 .notification-container {
-  height: 2em;
+  height: 3em;
 }
 .notification-container p {
-  background-color: #d3f0debb;
-  border: 1px solid green;
+  background-color: #cbd1cb;
+  color: #1da142;
+  border: 2px solid var(--notification-green);
   border-radius: 4px;
+  padding: 5px;
 }
 #input-section,
 #filter-section {

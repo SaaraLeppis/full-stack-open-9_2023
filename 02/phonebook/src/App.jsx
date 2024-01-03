@@ -20,8 +20,13 @@ const App = () => {
     })
   }, [])
 
-  //function fro showing notification (2.16)
-  const showNotififation = () => {}
+  //function for showing notification (2.16)
+  const showNotififation = (notification) => {
+    setMessage(notification)
+    setTimeout(() => {
+      setMessage(null)
+    }, 3000)
+  }
 
   //function for adding person data
   const setNewData = (newData) => {
@@ -31,32 +36,22 @@ const App = () => {
   }
 
   //function to check if name exists
-  const nameExists = (checkName, checkNumber) => {
-    console.log(persons.find((person) => person.name === checkName))
-
+  const nameExists = (checkName) => {
+    // console.log(persons.find((person) => person.name === checkName))
     return persons.some((person) => person.name === checkName)
   }
 
-  // checking if person exists (alert) and adding if not
+  // checking if person exists and adding if not
   const addPerson = (event) => {
     event.preventDefault()
 
     if (nameExists(newName)) {
-      setMessage(`${newName} is already added to phonebook`)
-      setTimeout(() => {
-        setMessage(null)
-      }, 3000)
+      showNotififation(`${newName} is already in Phonebook.`)
     } else {
       setNewData({ name: newName, number: newNumber })
-      setMessage(`${newName} just added to phonebook`)
-      setTimeout(() => {
-        setMessage(null)
-      }, 3000)
+      showNotififation(`${newName} added.`)
     }
-    /*  nameExists(newName)
-      ? alert(`${newName} is already added to phonebook`)
-      : setNewData({ name: newName, number: newNumber })
- */
+
     setNewName("")
     setNewNumber("")
   }
@@ -68,10 +63,7 @@ const App = () => {
       const newSet = persons.filter(
         (person) => person.name !== event.target.name
       )
-      setMessage(`${event.target.name} was removed from list`)
-      setTimeout(() => {
-        setMessage(null)
-      }, 5000)
+      showNotififation(`${event.target.name} deleted.`)
       setPersons(newSet)
     }
   }
