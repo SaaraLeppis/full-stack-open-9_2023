@@ -31,6 +31,14 @@ body {
   min-width: 80vw;
   min-height: 100vh;
 }
+.notification-container {
+  height: 2em;
+}
+.notification-container p {
+  background-color: #d3f0debb;
+  border: 1px solid green;
+  border-radius: 4px;
+}
 #input-section,
 #filter-section {
   display: flex;
