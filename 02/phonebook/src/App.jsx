@@ -40,10 +40,23 @@ const App = () => {
   // checking if person exists (alert) and adding if not
   const addPerson = (event) => {
     event.preventDefault()
-    nameExists(newName)
+
+    if (nameExists(newName)) {
+      setMessage(`${newName} is already added to phonebook`)
+      setTimeout(() => {
+        setMessage(null)
+      }, 3000)
+    } else {
+      setNewData({ name: newName, number: newNumber })
+      setMessage(`${newName} just added to phonebook`)
+      setTimeout(() => {
+        setMessage(null)
+      }, 3000)
+    }
+    /*  nameExists(newName)
       ? alert(`${newName} is already added to phonebook`)
       : setNewData({ name: newName, number: newNumber })
-
+ */
     setNewName("")
     setNewNumber("")
   }
