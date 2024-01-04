@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { useState } from "react"
 import axios from "axios"
+import CountryList from "./components/CountryList"
 
 const App = () => {
   const [searchValue, setsearchValue] = useState("")
@@ -10,19 +11,19 @@ const App = () => {
   const baseUrl = "https://studies.cs.helsinki.fi/restcountries/api/"
 
   useEffect(() => {
-    axios.get(`${baseUrl}all`).then((response) => {
+    axios.get(`${baseUrl}all`).then(response => {
       setCountryList(response.data)
     })
   }, [])
 
   useEffect(() => {
-    const filteredData = countryList.filter((c) =>
+    const filteredData = countryList.filter(c =>
       c.name.common.toLowerCase().includes(searchValue.toLowerCase())
     )
     setFilteredCountries(filteredData)
   }, [searchValue])
 
-  const handleSearch = (event) => {
+  const handleSearch = event => {
     console.log(event.target.value, "at Search")
     setsearchValue(event.target.value)
   }
@@ -39,7 +40,8 @@ const App = () => {
         />
       </div>
       <div>
-        {filteredCountries.length > 10 ? (
+        <CountryList filteredCountries={filteredCountries} />
+        {/*  {filteredCountries.length > 10 ? (
           <p>Too many</p>
         ) : filteredCountries.length === 1 ? (
           <p>Only One</p>
@@ -49,7 +51,7 @@ const App = () => {
               <li key={i}>{country.name.common}</li>
             ))}
           </ul>
-        )}
+        )} */}
         {/*           {countryList
             .filter((country) =>
               country.name.common
