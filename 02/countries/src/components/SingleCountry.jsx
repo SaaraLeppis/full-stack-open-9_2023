@@ -1,10 +1,10 @@
 const SingleCountry = ({ country }) => {
   return (
     <div className="single-container">
-      <h1>{country.name.common}</h1>
+      <h2>{country.name.common}</h2>
       <p>capital: {country.capital}</p>
       <p>area: {country.area}</p>
-      <h2>languages</h2>
+      <h3>languages</h3>
       {Object.values(country.languages).map((value, i) => (
         <li key={i}>{value}</li>
       ))}

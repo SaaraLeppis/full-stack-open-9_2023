@@ -1,9 +1,8 @@
 import SingleCountry from "./SingleCountry"
 
 const CountryList = ({ filteredCountries }) => {
-  console.log("filter", filteredCountries)
   return filteredCountries.length > 10 ? (
-    <p>Too many</p>
+    <p>Too many matches, apply another filter</p>
   ) : filteredCountries.length === 1 ? (
     <SingleCountry country={filteredCountries[0]} />
   ) : (

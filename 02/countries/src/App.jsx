@@ -24,43 +24,18 @@ const App = () => {
   }, [searchValue])
 
   const handleSearch = event => {
-    console.log(event.target.value, "at Search")
     setsearchValue(event.target.value)
   }
 
   return (
-    <div>
-      <p>Hello World!</p>
-      <div className="search-tools">
-        <input
-          type="text"
-          name="search-input"
-          placeholder="what?"
-          onChange={handleSearch}
-        />
+    <div className="main-container">
+      <h1>Countries</h1>
+      <div className="search-section">
+        <label htmlFor="search-input">Find countries: </label>
+        <input type="text" name="search-input" onChange={handleSearch} />
       </div>
       <div>
         <CountryList filteredCountries={filteredCountries} />
-        {/*  {filteredCountries.length > 10 ? (
-          <p>Too many</p>
-        ) : filteredCountries.length === 1 ? (
-          <p>Only One</p>
-        ) : (
-          <ul>
-            {filteredCountries.map((country, i) => (
-              <li key={i}>{country.name.common}</li>
-            ))}
-          </ul>
-        )} */}
-        {/*           {countryList
-            .filter((country) =>
-              country.name.common
-                .toLowerCase()
-                .includes(searchValue.toLowerCase())
-            )
-            .map((country, i) => (
-              <li key={i}>{country.name.common}</li>
-            ))} */}
       </div>
     </div>
   )
