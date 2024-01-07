@@ -1,9 +1,10 @@
 const Person = ({ persons, searchValue, removePerson }) => {
+  console.log("frontti, person", persons)
   return (
     <ul className="persons">
       {persons
         .filter(
-          (person) =>
+          person =>
             person.name.toLowerCase().includes(searchValue.toLowerCase()) ||
             searchValue === ""
         )

@@ -5,8 +5,6 @@ import Person from "./components/Person"
 import personServices from "./services/personServices"
 import Notification from "./components/Notification"
 
-import axios from "axios"
-
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState("")
@@ -15,13 +13,13 @@ const App = () => {
   const [message, setMessage] = useState(null)
 
   useEffect(() => {
-    personServices.getAll().then((phoneBookContent) => {
+    personServices.getAll().then(phoneBookContent => {
       setPersons(phoneBookContent)
     })
   }, [])
 
   //function for showing notification (2.16)
-  const showNotififation = (notification) => {
+  const showNotififation = notification => {
     setMessage(notification)
     setTimeout(() => {
       setMessage(null)
@@ -29,20 +27,20 @@ const App = () => {
   }
 
   //function for adding person data
-  const setNewData = (newData) => {
-    personServices.create(newData).then((data) => {
+  const setNewData = newData => {
+    personServices.create(newData).then(data => {
       setPersons(persons.concat(data))
     })
   }
 
   //function to check if name exists
-  const nameExists = (checkName) => {
+  const nameExists = checkName => {
     // console.log(persons.find((person) => person.name === checkName))
-    return persons.some((person) => person.name === checkName)
+    return persons.some(person => person.name === checkName)
   }
 
   // checking if person exists and adding if not
-  const addPerson = (event) => {
+  const addPerson = event => {
     event.preventDefault()
 
     if (nameExists(newName)) {
@@ -56,26 +54,24 @@ const App = () => {
     setNewNumber("")
   }
   //deleting person when 'delete'-button clicked
-  const deletePerson = (event) => {
+  const deletePerson = event => {
     event.preventDefault()
     if (window.confirm(`Delete ${event.target.name}?`)) {
       personServices.remove(event.target.value)
-      const newSet = persons.filter(
-        (person) => person.name !== event.target.name
-      )
+      const newSet = persons.filter(person => person.name !== event.target.name)
       showNotififation(`${event.target.name} deleted.`)
       setPersons(newSet)
     }
   }
 
   // change and search handlers
-  const handleChange = (event) => {
+  const handleChange = event => {
     event.target.name === "newName"
       ? setNewName(event.target.value)
       : setNewNumber(event.target.value)
   }
 
-  const handleSearch = (event) => {
+  const handleSearch = event => {
     setSearchValue(event.target.value)
   }
 
