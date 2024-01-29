@@ -8,18 +8,49 @@ interface Result {
   average: number
 }
 
+const parseCalculatorArguments = (args: string[]) => {
+  // if empty ("") values given, they will be removed
+  // * * * NOTICED that they will be removed from input automatically, but to reminde how it would have been done:
+  /* const removeEmpty = (listToChcek: string[]) => {
+    return listToChcek.filter(str => str !== '')
+  } */
+
+  // removes 2 first from 'input'
+  const slicedArgs = args.slice(2)
+
+  // makes input values to numbers from strings
+  let argsAsNumbers = slicedArgs.map(Number)
+
+  // function to check if any item is not number (strings with letters will be NaN)
+  const allNotNumbers = () => argsAsNumbers.some(item => isNaN(item))
+
+  if (args.length < 4)
+    throw new Error('Not enough arguments, check your input!')
+
+  if (!allNotNumbers()) {
+    return {
+      input1: argsAsNumbers[0],
+      input2: argsAsNumbers.slice(1),
+    }
+  } else {
+    throw new Error('Given values were not numbers, check your input!')
+  }
+}
+
 const description = (value: number): string => {
   switch (true) {
     case value === 1:
       return 'Move more, Breathe Easy!'
     case value === 2:
-      return 'Well done, but sure you can do even better!'
+      return 'Well done, but surely you can do even better!'
     default:
       return 'Great work, keep on moving!'
   }
 }
 
 const calculateExercises = (hoursList: number[], target: number): Result => {
+  console.log('heippa', hoursList, target)
+
   const periodLength = hoursList.length
 
   const trainingDaysList = hoursList.filter(hours => hours !== 0)
@@ -47,4 +78,15 @@ const calculateExercises = (hoursList: number[], target: number): Result => {
   }
 }
 
-console.log(calculateExercises([1, 0, 2, 4.5, 0, 3, 1, 0, 4], 2))
+//console.log(calculateExercises([1, 0, 2, 4.5, 0, 3, 1, 0, 4], 2))
+
+try {
+  const { input1, input2 } = parseCalculatorArguments(process.argv)
+  console.log(calculateExercises(input2, input1))
+} catch (error: unknown) {
+  let errorMessage = 'Something bad happened. '
+  if (error instanceof Error) {
+    errorMessage += `Error: ${error.message}`
+  }
+  console.log(errorMessage)
+}
