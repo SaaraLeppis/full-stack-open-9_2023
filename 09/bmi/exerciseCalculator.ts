@@ -49,8 +49,6 @@ const description = (value: number): string => {
 };
 
 const calculateExercises = (hoursList: number[], target: number): Result => {
-  console.log('heippa', hoursList, target);
-
   const periodLength = hoursList.length;
 
   const trainingDaysList = hoursList.filter(hours => hours !== 0);
