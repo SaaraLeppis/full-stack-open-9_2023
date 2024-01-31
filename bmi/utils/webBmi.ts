@@ -34,6 +34,4 @@ const calculateWebBmi = (height: number, weight: number): Result => {
   };
 };
 
-//console.log(calculateBmi(180, 74))
-
 export default calculateWebBmi;
