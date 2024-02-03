@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import data from '../../data/patientsData';
 import { v1 as uuid } from 'uuid';
 
@@ -21,7 +20,6 @@ const getNonSensitivePatientInfo = (): NonSensitivePatientInfo[] => {
 };
 
 const addPatient = (patient: NewPatient): Patient => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const id: string = uuid();
   const newPatient = {
     id,
