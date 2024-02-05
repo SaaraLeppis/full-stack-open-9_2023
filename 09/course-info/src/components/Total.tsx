@@ -1,10 +1,6 @@
-import { CoursePartProps } from '../types';
+import { CoursePart } from '../types';
 
-const TotalExercises = ({
-  parts,
-}: {
-  parts: CoursePartProps[];
-}): JSX.Element => {
+const TotalExercises = ({ parts }: { parts: CoursePart[] }) => {
   const totalExercises = parts.reduce(
     (sum, part) => sum + part.exerciseCount,
     0

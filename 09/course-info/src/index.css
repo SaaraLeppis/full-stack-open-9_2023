@@ -30,7 +30,9 @@ body {
 .content-container {
   padding: 0.5em 0;
 }
-
+.part {
+  padding-bottom: 1em;
+}
 h1 {
   font-size: 2em;
   line-height: 1.1;
