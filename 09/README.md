@@ -20,3 +20,27 @@ npm install --location=global ts-node typescript
 used to define how the TypeScript compiler should interpret the code.
 
 - [noImplicitAny](https://www.typescriptlang.org/tsconfig#noImplicitAny)
+
+## React with types
+
+start project by
+
+```shell
+npm create vite@latest app-name -- --template react-ts
+```
+
+run app by
+
+```shell
+npm run dev
+```
+
+> .jsx files are now .tsx files
+
+> way to find type of event:
+> write event handler inline and hover over the 'event',
+> for example:
+>
+> ```html
+> <form onSubmit={event => console.log(event)}>
+> ```
