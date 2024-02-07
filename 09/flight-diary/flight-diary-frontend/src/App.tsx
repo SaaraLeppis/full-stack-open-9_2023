@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+
+import { createData, getData } from './services/diaryService';
 import { Entry, Visibility, Weather } from './types';
 
 function App() {
@@ -10,16 +11,9 @@ function App() {
     weather: '' as Weather,
     comment: '',
   });
-  const fetchData = () => {
-    axios.get<Entry[]>('http://localhost:3000/api/diaries').then(response => {
-      const dataInDiary = response.data;
-      console.log(dataInDiary);
-      setEntries(dataInDiary as Entry[]);
-    });
-  };
 
   useEffect(() => {
-    fetchData();
+    getData().then(data => setEntries(data));
   }, []);
   /* useEffect(() => {
     axios.get<Entry[]>('http://localhost:3000/api/diaries').then(response => {
@@ -37,12 +31,9 @@ function App() {
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      axios
-        .post('http://localhost:3000/api/diaries', newEntry)
-        .then(response => response.data)
-        .then(data => {
-          setEntries(entries.concat(data));
-        });
+      createData(newEntry).then(data => {
+        setEntries(entries.concat(data));
+      });
 
       setNewEntry({
         date: '',
@@ -50,7 +41,6 @@ function App() {
         weather: '' as Weather,
         comment: '',
       });
-      fetchData();
     } catch (error) {
       console.log(error);
     }
@@ -61,38 +51,46 @@ function App() {
       <div className="form-container">
         <h2>Add new entry</h2>
         <form onSubmit={submitHandler}>
-          <label htmlFor="date">date: </label>
-          <input
-            type="text"
-            id="date"
-            name="date"
-            value={newEntry.date}
-            onChange={changeHandler}
-          />
-          <label htmlFor="visibility">visibility: </label>
-          <input
-            type="text"
-            id="visibility"
-            name="visibility"
-            value={newEntry.visibility}
-            onChange={changeHandler}
-          />
-          <label htmlFor="weather">Weather: </label>
-          <input
-            type="text"
-            id="weather"
-            name="weather"
-            value={newEntry.weather}
-            onChange={changeHandler}
-          />
-          <label htmlFor="comment">Comment: </label>
-          <input
-            type="text"
-            id="comment"
-            name="comment"
-            value={newEntry.comment}
-            onChange={changeHandler}
-          />
+          <div className="input-row">
+            <label htmlFor="date">date: </label>
+            <input
+              type="text"
+              id="date"
+              name="date"
+              value={newEntry.date}
+              onChange={changeHandler}
+            />
+          </div>
+          <div className="input-row">
+            <label htmlFor="visibility">visibility: </label>
+            <input
+              type="text"
+              id="visibility"
+              name="visibility"
+              value={newEntry.visibility}
+              onChange={changeHandler}
+            />
+          </div>
+          <div className="input-row">
+            <label htmlFor="weather">Weather: </label>
+            <input
+              type="text"
+              id="weather"
+              name="weather"
+              value={newEntry.weather}
+              onChange={changeHandler}
+            />
+          </div>
+          <div className="input-row">
+            <label htmlFor="comment">Comment: </label>
+            <input
+              type="text"
+              id="comment"
+              name="comment"
+              value={newEntry.comment}
+              onChange={changeHandler}
+            />
+          </div>
           <button type="submit">add +</button>
         </form>
       </div>

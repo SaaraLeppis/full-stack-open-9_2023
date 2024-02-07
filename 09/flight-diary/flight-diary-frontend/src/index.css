@@ -25,6 +25,25 @@ body {
 .main-container {
   margin: 2em;
 }
+form {
+  display: flex;
+  flex-direction: column;
+  height: 20em;
+}
+label {
+  text-transform: capitalize;
+}
+input {
+  padding: 0.2em;
+}
+.input-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 250px;
+  padding-bottom: 1em;
+}
+
 .single-entry {
   padding-bottom: 0.4em;
 }
@@ -47,19 +66,19 @@ h3 {
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   background-color: var(--lt-lilac);
-  color: var(--dk-lilac);
+  color: var(--navy-blue);
   cursor: pointer;
   transition: border-color 0.25s;
+  width: 250px;
 }
 button:hover {
-  border-color: #646cff;
-  background-color: transparent;
+  border-color: var(--navy-blue);
 }
 button:focus,
 button:focus-visible {
