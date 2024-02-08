@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 
 import { createData, getData } from './services/diaryService';
 import { Entry, Visibility, Weather } from './types';
+import axios, { AxiosError } from 'axios';
 
 function App() {
+  //states
   const [entries, setEntries] = useState<Entry[]>([]);
   const [newEntry, setNewEntry] = useState<Entry>({
     date: '',
@@ -11,30 +13,29 @@ function App() {
     weather: '' as Weather,
     comment: '',
   });
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     getData().then(data => setEntries(data));
   }, []);
-  /* useEffect(() => {
-    axios.get<Entry[]>('http://localhost:3000/api/diaries').then(response => {
-      const dataInDiary = response.data;
-      console.log(dataInDiary);
-      setEntries(dataInDiary as Entry[]);
-    });
-  }, []); */
 
+  // helper functions / handlers
+  const errorHandler = (message: string) => {
+    setErrorMessage(message.replace('Something went wrong. ', ''));
+    setTimeout(() => setErrorMessage(''), 4500);
+  };
   const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setNewEntry({ ...newEntry, [name]: value });
   };
-
-  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      createData(newEntry).then(data => {
+      const data = await createData(newEntry);
+      setEntries(entries.concat(data));
+      /*       createData(newEntry).then(data => {
         setEntries(entries.concat(data));
-      });
-
+      }); */
       setNewEntry({
         date: '',
         visibility: '' as Visibility,
@@ -42,12 +43,21 @@ function App() {
         comment: '',
       });
     } catch (error) {
-      console.log(error);
+      if (axios.isAxiosError(error)) {
+        const message: string = error.response?.data;
+        errorHandler(message);
+        console.log(error.response?.data);
+      } else {
+        console.log(error);
+      }
     }
   };
   return (
     <div className="main-container">
       <h1>Flight diary</h1>
+      <div className="error-container">
+        {errorMessage && <p>{errorMessage}</p>}
+      </div>
       <div className="form-container">
         <h2>Add new entry</h2>
         <form onSubmit={submitHandler}>
