@@ -21,7 +21,6 @@ router.post('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   try {
-    console.log(req.params.id);
     const searchedPatientID = req.params.id;
     const details = patientService.searchPatient(searchedPatientID);
     details ? res.json(details) : res.status(404).send('id not found');

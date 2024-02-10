@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import patients from '../services/patients';
-import { Patient } from '../types';
+import diagnoses from '../services/diagnoses';
+
+import { Diagnosis, Patient } from '../types';
 import { useParams } from 'react-router-dom';
 import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
@@ -10,14 +12,16 @@ const OnePatient = () => {
   const patientId: string | undefined = useParams().id;
 
   const [details, setDetails] = useState<Patient | null>(null);
+  const [diagnoseList, setDiagnoseList] = useState<Diagnosis[] | null>([]);
   useEffect(() => {
     patients
       // .getById('d27736ec-f723-11e9-8f0b-362b9e155667')
       .getById(patientId)
       .then(data => setDetails(data));
+    diagnoses.getAllDiagnoses().then(data => setDiagnoseList(data));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(details);
+
   return (
     <>
       <h2>
@@ -43,9 +47,15 @@ const OnePatient = () => {
             </p>
 
             <ul>
-              {e.diagnosisCodes?.map(c => (
-                <li>{c}</li>
-              ))}
+              {e.diagnosisCodes?.map(c => {
+                const diagnosis = diagnoseList?.find(d => d.code === c);
+                console.log('diagnoosi', diagnosis);
+                return (
+                  <li key={c}>
+                    {c} {diagnosis ? <>{diagnosis.name}</> : ''}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         ))}
