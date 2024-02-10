@@ -17,6 +17,7 @@ const OnePatient = () => {
       .then(data => setDetails(data));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  console.log(details);
   return (
     <>
       <h2>
@@ -32,6 +33,23 @@ const OnePatient = () => {
       <></>
       <p>ssn: {details?.ssn} </p>
       <p>occupation: {details?.occupation}</p>
+
+      <div className="entry-section">
+        <h3>entries</h3>
+        {details?.entries.map(e => (
+          <div key={e.id}>
+            <p>
+              {e.date} {e.description}
+            </p>
+
+            <ul>
+              {e.diagnosisCodes?.map(c => (
+                <li>{c}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
     </>
   );
 };
