@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import patients from '../services/patients';
-import diagnoses from '../services/diagnoses';
-
-import { Diagnosis, Patient } from '../types';
 import { useParams } from 'react-router-dom';
+import patients from '../../services/patients';
+import diagnoses from '../../services/diagnoses';
+import { Diagnosis, Patient } from '../../types';
+import PatientEntries from './PatientEntries';
+
 import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
 import TransgenderIcon from '@mui/icons-material/Transgender';
@@ -40,23 +41,10 @@ const OnePatient = () => {
 
       <div className="entry-section">
         <h3>entries</h3>
+        {details?.entries.length === 0 && <p>no entries</p>}
         {details?.entries.map(e => (
           <div key={e.id}>
-            <p>
-              {e.date} {e.description}
-            </p>
-
-            <ul>
-              {e.diagnosisCodes?.map(c => {
-                const diagnosis = diagnoseList?.find(d => d.code === c);
-                console.log('diagnoosi', diagnosis);
-                return (
-                  <li key={c}>
-                    {c} {diagnosis ? <>{diagnosis.name}</> : ''}
-                  </li>
-                );
-              })}
-            </ul>
+            <PatientEntries entry={e} diagnoseList={diagnoseList} />
           </div>
         ))}
       </div>
