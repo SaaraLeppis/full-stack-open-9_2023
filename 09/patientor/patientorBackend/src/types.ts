@@ -42,7 +42,7 @@ interface HospitalEntry extends BaseEntry {
     criteria: string;
   };
 }
-interface HealthCheckEntry extends BaseEntry {
+export interface HealthCheckEntry extends BaseEntry {
   type: 'HealthCheck';
   healthCheckRating: HealthCheckRating;
 }
@@ -51,14 +51,22 @@ export type Entry =
   | OccupationalHealthcareEntry
   | HospitalEntry;
 
+type UnionOmit<T, K extends string | number | symbol> = T extends unknown
+  ? Omit<T, K>
+  : never;
+export type EntryWithoutId = UnionOmit<Entry, 'id'>;
 export enum HealthCheckRating {
   'Healthy' = 0,
   'LowRisk' = 1,
   'HighRisk' = 2,
   'CriticalRisk' = 3,
 }
+export interface SickLeave {
+  startDate: string;
+  endDate: string;
+}
 
-type UnionOmit<T, K extends string | number | symbol> = T extends unknown
-  ? Omit<T, K>
-  : never;
-export type EntryWithoutId = UnionOmit<Entry, 'id'>;
+export interface Discharge {
+  date: string;
+  criteria: string;
+}
