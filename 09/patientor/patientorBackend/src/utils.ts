@@ -8,6 +8,7 @@ import {
   Discharge,
 } from './types';
 
+// helper functions for validation
 const isString = (text: unknown): text is string => {
   return typeof text === 'string' || text instanceof String;
 };
@@ -25,6 +26,7 @@ const isGender = (param: string): param is Gender => {
 const isValidRange = (value: unknown): boolean => {
   return Number.isInteger(value);
 };
+
 const isHealthRating = (
   healthRating: number
 ): healthRating is HealthCheckRating => {
@@ -33,25 +35,12 @@ const isHealthRating = (
     .includes(healthRating);
 };
 
-const parseName = (name: unknown): string => {
-  if (!name || !isString(name)) {
-    throw new Error('Incorrect or missing name');
-  }
-  return name;
-};
-
+// validation functions
 const parseDate = (date: unknown): string => {
   if (!date || !isString(date) || !isDate(date)) {
     throw new Error('Incorrect or missing date');
   }
   return date;
-};
-
-const parseSsn = (ssn: unknown): string => {
-  if (!isString(ssn) || !ssn) {
-    throw new Error('Incorrect or missing ssn');
-  }
-  return ssn;
 };
 
 const parseGender = (gender: unknown): Gender => {
@@ -61,19 +50,11 @@ const parseGender = (gender: unknown): Gender => {
   return gender;
 };
 
-const parseOccupation = (occupation: unknown): string => {
-  if (!occupation || !isString(occupation)) {
-    throw new Error('Incorrect or missing occupation');
-  }
-  console.log(occupation);
-  return occupation;
-};
-
 const parseString = (target: unknown, description: string): string => {
+  console.log('hi there');
   if (!target || !isString(target)) {
     throw new Error(`Incorrect or missing ${description}`);
   }
-  console.log('new checker');
   return target;
 };
 const parseCodes = (target: unknown): Array<Diagnoses['code']> => {
@@ -94,7 +75,6 @@ const parseRating = (value: unknown): HealthCheckRating => {
   }
   return value;
 };
-
 const parseSickLeave = (sickLeave: unknown): SickLeave => {
   if (!sickLeave || typeof sickLeave !== 'object') {
     throw new Error('Incorrect or missing sick leave data');
@@ -106,14 +86,12 @@ const parseSickLeave = (sickLeave: unknown): SickLeave => {
       endDate: parseDate(sickLeave.endDate),
     };
   }
-
   throw new Error('Incorrect sickleave data');
 };
 const parseDischarge = (discharge: unknown): Discharge => {
   if (!discharge || typeof discharge !== 'object') {
     throw new Error('Incorrect or missing discharge data');
   }
-
   if ('date' in discharge && 'criteria' in discharge) {
     return {
       date: parseDate(discharge.date),
@@ -122,32 +100,32 @@ const parseDischarge = (discharge: unknown): Discharge => {
   }
   throw new Error('Incorrect discharge data');
 };
-// for new patients
+// for ** NEW PATIENT **
 export const toNewPatientEntry = (object: unknown): NewPatient => {
   if (!object || typeof object !== 'object') {
-    throw new Error('Incorrect or missing data in patient details');
+    throw new Error(`Incorrect or missing data in patient details ${object}`);
   }
   if (
     'name' in object &&
     'dateOfBirth' in object &&
     'ssn' in object &&
     'gender' in object &&
-    'occupation' in object &&
-    'entries' in object
+    'occupation' in object
   ) {
     const newPatientEntry: NewPatient = {
-      name: parseName(object.name),
+      name: parseString(object.name, 'name'),
       dateOfBirth: parseDate(object.dateOfBirth),
-      ssn: parseSsn(object.ssn),
+      ssn: parseString(object.ssn, 'ssn'),
       gender: parseGender(object.gender),
-      occupation: parseOccupation(object.occupation),
+      occupation: parseString(object.occupation, 'occupation'),
       entries: [],
     };
     return newPatientEntry;
   }
-  throw new Error('Incorrect data: some fields are missing');
+  throw new Error(`Incorrect data: some fields are missing`);
 };
 
+// options for ** NEW ENTRY **
 const validateHealthCheckEntry = (object: unknown): EntryWithoutId => {
   if (!object || typeof object !== 'object') {
     throw new Error('Incorrect or missing data in new entry');
@@ -215,7 +193,8 @@ const validateHospitalEntry = (object: unknown): EntryWithoutId => {
   }
   throw new Error('Missing or invalid parameters!');
 };
-// for existing Patient's new entry
+
+// for existing Patient's ** NEW ENTRY **
 export const toNewEntry = (object: EntryWithoutId): EntryWithoutId => {
   if (!object || typeof object !== 'object') {
     throw new Error('Incorrect or missing data in new entry');
