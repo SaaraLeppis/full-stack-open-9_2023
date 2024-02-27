@@ -30,11 +30,16 @@ interface BaseEntry {
   specialist: string;
   diagnosisCodes?: Array<Diagnoses['code']>;
 }
+interface HealthCheckEntry extends BaseEntry {
+  type: 'HealthCheck';
+  healthCheckRating: HealthCheckRating;
+}
 interface OccupationalHealthcareEntry extends BaseEntry {
   type: 'OccupationalHealthcare';
   employerName: string;
   sickLeave?: { startDate: string; endDate: string };
 }
+
 interface HospitalEntry extends BaseEntry {
   type: 'Hospital';
   discharge: {
@@ -42,19 +47,17 @@ interface HospitalEntry extends BaseEntry {
     criteria: string;
   };
 }
-export interface HealthCheckEntry extends BaseEntry {
-  type: 'HealthCheck';
-  healthCheckRating: HealthCheckRating;
-}
+
 export type Entry =
-  | HealthCheckEntry
   | OccupationalHealthcareEntry
-  | HospitalEntry;
+  | HospitalEntry
+  | HealthCheckEntry;
 
 type UnionOmit<T, K extends string | number | symbol> = T extends unknown
   ? Omit<T, K>
   : never;
 export type EntryWithoutId = UnionOmit<Entry, 'id'>;
+
 export enum HealthCheckRating {
   'Healthy' = 0,
   'LowRisk' = 1,

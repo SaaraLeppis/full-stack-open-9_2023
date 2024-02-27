@@ -51,21 +51,21 @@ const parseGender = (gender: unknown): Gender => {
 };
 
 const parseString = (target: unknown, description: string): string => {
-  console.log('hi there');
   if (!target || !isString(target)) {
     throw new Error(`Incorrect or missing ${description}`);
   }
   return target;
 };
 const parseCodes = (target: unknown): Array<Diagnoses['code']> => {
-  if (!target || typeof target !== 'object' || !('diagnosisCodes' in target)) {
+  if (!target) {
     // we will just trust the data to be in correct form
     return [] as Array<Diagnoses['code']>;
   }
-  return target.diagnosisCodes as Array<Diagnoses['code']>;
+  return target as Array<Diagnoses['code']>;
 };
 
 const parseRating = (value: unknown): HealthCheckRating => {
+  console.log('parser rating', value);
   if (
     !isValidRange(value) ||
     typeof value !== 'number' ||
@@ -126,7 +126,8 @@ export const toNewPatientEntry = (object: unknown): NewPatient => {
 };
 
 // options for ** NEW ENTRY **
-const validateHealthCheckEntry = (object: unknown): EntryWithoutId => {
+const validateHealthCheckEntry = (object: unknown) => {
+  //
   if (!object || typeof object !== 'object') {
     throw new Error('Incorrect or missing data in new entry');
   }
@@ -137,11 +138,11 @@ const validateHealthCheckEntry = (object: unknown): EntryWithoutId => {
     'type' in object &&
     'healthCheckRating' in object
   ) {
-    const validatedHealthCheckEntry = {
+    const validatedHealthCheckEntry: EntryWithoutId = {
       date: parseDate(object.date),
       description: parseString(object.description, 'description'),
       specialist: parseString(object.specialist, 'specialist'),
-      type: parseString(object.type, 'type') as 'HealthCheck',
+      type: 'HealthCheck', // type: parseString(object.type, 'type') as 'HealthCheck',
       healthCheckRating: parseRating(object.healthCheckRating),
     };
     return validatedHealthCheckEntry;
@@ -149,7 +150,7 @@ const validateHealthCheckEntry = (object: unknown): EntryWithoutId => {
   throw new Error('Missing or invalid parameters!');
 };
 
-const validateOccupationalEntry = (object: unknown): EntryWithoutId => {
+const validateOccupationalEntry = (object: unknown) => {
   if (!object || typeof object !== 'object') {
     throw new Error('Incorrect or missing data in new entry');
   }
@@ -160,7 +161,7 @@ const validateOccupationalEntry = (object: unknown): EntryWithoutId => {
     'type' in object &&
     'employerName' in object
   ) {
-    const validatedOccupationalEntry = {
+    const validatedOccupationalEntry: EntryWithoutId = {
       date: parseDate(object.date),
       description: parseString(object.description, 'description'),
       specialist: parseString(object.specialist, 'specialist'),
@@ -171,7 +172,7 @@ const validateOccupationalEntry = (object: unknown): EntryWithoutId => {
   }
   throw new Error('Missing or invalid parameters!');
 };
-const validateHospitalEntry = (object: unknown): EntryWithoutId => {
+const validateHospitalEntry = (object: unknown) => {
   if (!object || typeof object !== 'object') {
     throw new Error('Incorrect or missing data in new entry');
   }
@@ -182,7 +183,7 @@ const validateHospitalEntry = (object: unknown): EntryWithoutId => {
     'type' in object &&
     'discharge' in object
   ) {
-    const validatedHospitalEntry = {
+    const validatedHospitalEntry: EntryWithoutId = {
       date: parseDate(object.date),
       description: parseString(object.description, 'description'),
       specialist: parseString(object.specialist, 'specialist'),
@@ -205,24 +206,26 @@ export const toNewEntry = (object: EntryWithoutId): EntryWithoutId => {
     case 'HealthCheck':
       validatedNewEntry = validateHealthCheckEntry(object);
       if (object.diagnosisCodes) {
-        parseCodes(object.diagnosisCodes);
+        validatedNewEntry.diagnosisCodes = parseCodes(object.diagnosisCodes);
       }
+      console.log(validatedNewEntry, 'in validator');
       return validatedNewEntry;
+
     case 'OccupationalHealthcare':
       validatedNewEntry = validateOccupationalEntry(object);
       if (object.sickLeave) {
-        parseSickLeave(object.sickLeave);
+        validatedNewEntry.sickLeave = parseSickLeave(object.sickLeave);
       } else if (object.diagnosisCodes) {
-        parseCodes(object.diagnosisCodes);
+        validatedNewEntry.diagnosisCodes = parseCodes(object.diagnosisCodes);
       }
       return validatedNewEntry;
 
     case 'Hospital':
       validatedNewEntry = validateHospitalEntry(object);
       if (object.diagnosisCodes) {
-        parseCodes(object.diagnosisCodes);
+        validatedNewEntry.diagnosisCodes = parseCodes(object.diagnosisCodes);
       } else if (object.discharge) {
-        parseDischarge(object.discharge);
+        validatedNewEntry.discharge = parseDischarge(object.discharge);
       }
       return validatedNewEntry;
 

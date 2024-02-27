@@ -39,7 +39,9 @@ router.get('/:id', (req, res) => {
 router.post('/:id/entries', (req, res) => {
   try {
     const patientId = req.params.id;
+    console.log('backend router', patientId, req.body);
     const newEntry: EntryWithoutId = toNewEntry(req.body as EntryWithoutId);
+    console.log('backend newEntry router', newEntry);
 
     const newPatientEntry = patientService.addPatientEntry(
       patientId.toString(),

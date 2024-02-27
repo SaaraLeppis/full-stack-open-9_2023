@@ -1,22 +1,12 @@
-import React from 'react';
-import { Diagnosis, Entry } from '../../types';
+import {
+  Diagnosis,
+  HealthCheckEntry,
+  HospitalEntry,
+  OccupationalHealthcareEntry,
+} from '../../types';
+import { EntryTypeIcon, HealthCheckIcon } from './PatientEntryIcons';
 
-import { Health, Hospital, Occupational } from './PatientEntryCases';
-
-interface entryProps {
-  entry: Entry;
-  diagnoseList: Diagnosis[] | null;
-}
-/* //const assertNever = (value: never): never => {
-  throw new Error(
-    `Unhandled discriminated union member: ${JSON.stringify(value)}`
-  );
-}; */
-const exhaustiveCheck = (entry: never): never => {
-  throw new Error(`Unhandled entry type: ${JSON.stringify(entry)}`);
-};
-
-/* const getDiagnosisName = (
+const getDiagnosisName = (
   diagnosisCodes: string[] | undefined,
   diagnoseList: Diagnosis[]
 ): string | undefined => {
@@ -28,49 +18,8 @@ const exhaustiveCheck = (entry: never): never => {
   }
   return undefined;
 };
- */
-/* const HealthCheckIcon: React.FC<{ rate: HealthCheckRating }> = ({ rate }) => {
-  let color;
-  switch (rate) {
-    case HealthCheckRating.Healthy:
-      color = green['A400'];
-      break;
-    case HealthCheckRating.LowRisk:
-      color = lightBlue[400];
-      break;
-    case HealthCheckRating.HighRisk:
-      color = orange[500];
-      break;
-    case HealthCheckRating.CriticalRisk:
-      color = brown[400];
-      break;
-    default:
-      color = 'default';
-  }
-  return <Favorite style={{ color, verticalAlign: 'bottom' }} />;
-};
-const EntryTypeIcon: React.FC<{ entry: Entry }> = ({ entry }) => {
-  switch (entry.type) {
-    case 'Hospital':
-      return (
-        <LocalHospital style={{ color: red[400], verticalAlign: 'bottom' }} />
-      );
-      break;
-    case 'OccupationalHealthcare':
-      return <WorkIcon style={{ color: grey[800], verticalAlign: 'bottom' }} />;
-      break;
-    case 'HealthCheck':
-      return (
-        <MedicalInformationIcon
-          style={{ color: lightBlue[400], verticalAlign: 'bottom' }}
-        />
-      );
-      break;
-    default:
-      break;
-  }
-}; */
-/*const Hospital: React.FC<{
+
+export const Hospital: React.FC<{
   entry: HospitalEntry;
   diagnoseList: Diagnosis[];
 }> = ({ entry, diagnoseList }) => {
@@ -100,7 +49,7 @@ const EntryTypeIcon: React.FC<{ entry: Entry }> = ({ entry }) => {
     </div>
   );
 };
-const Occupational: React.FC<{
+export const Occupational: React.FC<{
   entry: OccupationalHealthcareEntry;
   diagnoseList: Diagnosis[];
 }> = ({ entry, diagnoseList }) => {
@@ -120,7 +69,7 @@ const Occupational: React.FC<{
           );
         })}
       </ul>
-      <p>
+      <div>
         Employer: {entry.employerName}
         {entry.sickLeave && (
           <>
@@ -128,11 +77,11 @@ const Occupational: React.FC<{
             <p>sickleave ends: {entry.sickLeave?.endDate}</p>
           </>
         )}
-      </p>
+      </div>
     </div>
   );
 };
-const Health: React.FC<{
+export const Health: React.FC<{
   entry: HealthCheckEntry;
   diagnoseList: Diagnosis[];
 }> = ({ entry, diagnoseList }) => {
@@ -159,25 +108,4 @@ const Health: React.FC<{
       </p>
     </div>
   );
-}; */
-
-const PatientEntries: React.FC<entryProps> = ({ entry, diagnoseList }) => {
-  if (diagnoseList === null) {
-    // Handle the case where diagnoseList is null
-    return <div>Loading diagnoses...</div>;
-  }
-  switch (entry.type) {
-    case 'Hospital':
-      return <Hospital entry={entry} diagnoseList={diagnoseList} />;
-    case 'OccupationalHealthcare':
-      return <Occupational entry={entry} diagnoseList={diagnoseList} />;
-    case 'HealthCheck':
-      return <Health entry={entry} diagnoseList={diagnoseList} />;
-
-    default:
-      //      return assertNever(entry);
-      exhaustiveCheck(entry);
-  }
 };
-
-export default PatientEntries;

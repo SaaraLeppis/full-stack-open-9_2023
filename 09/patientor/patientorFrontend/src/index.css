@@ -69,6 +69,15 @@ button:focus-visible {
 .healthcheck {
   border-color: #29b6f6;
 }
+.entry-form {
+  padding-bottom: 4em;
+}
+.entry-section h3 {
+  margin-bottom: 10px;
+}
+.error-message {
+  height: 2em;
+}
 
 @media (prefers-color-scheme: light) {
   :root {

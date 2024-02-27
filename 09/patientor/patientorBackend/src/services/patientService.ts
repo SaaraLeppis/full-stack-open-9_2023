@@ -6,6 +6,7 @@ import {
   NonSensitivePatientInfo,
   NewPatient,
   EntryWithoutId,
+  Entry,
 } from '../types';
 
 const patients: Patient[] = data;
@@ -41,7 +42,7 @@ const searchPatient = (id: string): Patient | undefined => {
 };
 
 //9.26
-const addPatientEntry = (id: string, entry: EntryWithoutId): Patient => {
+const addPatientEntry = (id: string, entry: EntryWithoutId): Entry => {
   const patientIndex = patients.findIndex(p => p.id === id);
   const entryId: string = uuid();
   const newEntry = {
@@ -54,7 +55,7 @@ const addPatientEntry = (id: string, entry: EntryWithoutId): Patient => {
   if (!patient) {
     throw new Error(`Patient with id ${id} not found after adding new entry`);
   }
-  return patient;
+  return newEntry;
 };
 
 export default {
