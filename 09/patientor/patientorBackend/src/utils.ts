@@ -8,6 +8,8 @@ import {
   Discharge,
 } from './types';
 
+// ** should be refactored **
+
 // helper functions for validation
 const isString = (text: unknown): text is string => {
   return typeof text === 'string' || text instanceof String;
@@ -65,7 +67,6 @@ const parseCodes = (target: unknown): Array<Diagnoses['code']> => {
 };
 
 const parseRating = (value: unknown): HealthCheckRating => {
-  console.log('parser rating', value);
   if (
     !isValidRange(value) ||
     typeof value !== 'number' ||
@@ -208,7 +209,6 @@ export const toNewEntry = (object: EntryWithoutId): EntryWithoutId => {
       if (object.diagnosisCodes) {
         validatedNewEntry.diagnosisCodes = parseCodes(object.diagnosisCodes);
       }
-      console.log(validatedNewEntry, 'in validator');
       return validatedNewEntry;
 
     case 'OccupationalHealthcare':
